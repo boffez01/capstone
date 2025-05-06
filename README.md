@@ -1,8 +1,8 @@
-# 🚛 Capstone Project - Gestionale Container Edili
+#  Capstone Project - Gestionale Container Edili
 
 Benvenuto nel progetto finale del mio percorso con **EPICODE**: un'applicazione web realizzata per un'azienda specializzata nel trasporto e smaltimento di detriti e rifiuti edili tramite container di varie misure.
 
-## 🎯 Obiettivo del progetto
+##  Obiettivo del progetto
 
 Digitalizzare la gestione dell'azienda e offrire un'interfaccia semplice ma professionale per i clienti e per l'amministrazione. I clienti potranno:
 - Visualizzare i container disponibili con dimensioni e prezzi
@@ -14,7 +14,7 @@ L'amministratore potrà:
 - Aggiungere e gestire clienti
 - Registrare lavori svolti, quantità trasportate, pagamenti effettuati e debiti
 
-## 🧰 Tecnologie utilizzate
+##  Tecnologie utilizzate
 
 ### Frontend
 - React
@@ -38,23 +38,23 @@ L'amministratore potrà:
 
 ---
 
-## 📦 Funzionalità principali
+##  Funzionalità principali
 
 ### Per i clienti
-- 🗃️ Scelta container tra varie misure e prezzi
-- 🛒 Carrello con preventivo aggiornato
-- 📝 Form di contatto
-- 📍 Mappa dell’azienda con info utili
+-  Scelta container tra varie misure e prezzi
+-  Carrello con preventivo aggiornato
+-  Form di contatto
+-  Mappa dell’azienda con info utili
 
 ### Per l’amministrazione
-- 🔐 Login riservato (admin)
-- 👤 Gestione clienti e lavori
-- 💰 Monitoraggio entrate/uscite
-- ⚖️ Quantità merce/detriti gestiti
+-  Login riservato (admin)
+-  Gestione clienti e lavori
+-  Monitoraggio entrate/uscite
+-  Quantità merce/detriti gestiti
 
 ---
 
-## 🚀 Rilasci previsti
+## Rilasci previsti
 
 | Versione | Descrizione |
 |----------|-------------|
