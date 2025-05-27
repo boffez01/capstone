@@ -1,15 +1,33 @@
-import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap'; 
 import { Link } from 'react-router-dom';
 
 const NavbarComponent = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) { 
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="py-3">
+    <Navbar expand="lg" className={`chiarenza-navbar fixed-top ${scrolled ? 'scrolled' : ''}`}>
       <Container>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <img
-            src="/images/logo.png"
-            alt="Chiarenza Impianti"
-            height="50"
+            src="/images/logo_tech.jpeg" 
+            alt="NexusTech Solutions Logo"
+            height="100" 
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
@@ -17,28 +35,27 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="main-navbar" />
         
         <Navbar.Collapse id="main-navbar">
-          <Nav className="me-auto">
+          <Nav className="ms-auto me-0"> 
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/chi-siamo">Chi Siamo</Nav.Link>
-            <Nav.Link as={Link} to="/servizi">Servizi</Nav.Link>
-            <Nav.Link as={Link} to="/contenitori">Contenitori</Nav.Link>
+            
+            <NavDropdown title="Servizi" id="basic-nav-dropdown" menuVariant="dark"> 
+              <NavDropdown.Item as={Link} to="/servizi/carpenteria-saldatura">Carpenteria e Saldatura</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/servizi/lavorazione-lamiera">Lavorazione Lamiera</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/servizi/manutenzione-industriale">Manutenzione Industriale</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/servizi/piping">Piping</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/servizi/impiantistica">Impiantistica</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/contenitori">Vendita Container</NavDropdown.Item> 
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/servizi">Tutti i Servizi</NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link as={Link} to="/contenitori">Contenitori</Nav.Link> 
             <Nav.Link as={Link} to="/contatti">Contatti</Nav.Link>
+            <Button as={Link} to="/contatti" variant="primary" className="ms-lg-3 py-2 px-4">
+              Richiedi Preventivo
+            </Button>
           </Nav>
-          
-          <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-            <div className="me-md-3 mb-2 mb-md-0">
-              <i className="bi bi-geo-alt me-2"></i>
-              <span>Via Industriale, 11/13, 25030 Corzano BS</span>
-            </div>
-            <div className="me-md-3 mb-2 mb-md-0">
-              <i className="bi bi-telephone me-2"></i>
-              <span>+39 0309718894</span>
-            </div>
-            <div>
-              <i className="bi bi-envelope me-2"></i>
-              <span>info@chiarenzagroup.com</span>
-            </div>
-          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

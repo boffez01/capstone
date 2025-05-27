@@ -3,8 +3,10 @@ import AboutUs from '../components/AboutUs';
 import Services from '../components/Services';
 import ContainersSection from '../components/ContainersSection';
 import ValuesSection from '../components/ValuesSection';
-import Certifications from '../components/Certifications';
 import Stats from '../components/Stats';
+import CallToActionContactSection from '../components/CallToActionContactSection';
+
+import FaqSection from '../components/FaqSection'; 
 
 const Home = () => {
   return (
@@ -14,8 +16,12 @@ const Home = () => {
       <Services />
       <ContainersSection />
       <ValuesSection />
-      <Certifications />
       <Stats />
+
+      
+      <FaqSection /> 
+
+      <CallToActionContactSection />
     </>
   );
 };

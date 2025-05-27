@@ -1,12 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Form, ListGroup, Badge, Offcanvas, Alert } from 'react-bootstrap';
-import { FaShippingFast, FaRuler, FaBoxOpen, FaBath, FaPlug, FaShoppingCart, FaTimes, FaEuroSign } from 'react-icons/fa';
+import { FaShippingFast, FaRuler, FaBoxOpen, FaBath, FaPlug, FaShoppingCart, FaTimes, FaEuroSign, FaSearch } from 'react-icons/fa';
 import { useCart } from '../components/CartContext';
-import { FaSearch } from 'react-icons/fa';
 import { Modal } from 'react-bootstrap';
-
-
-
 import { Link } from 'react-router-dom';
 
 
@@ -24,7 +20,6 @@ const Contenitori = () => {
     condition: []
   });
 
-  // Dati container (come nel tuo codice originale)
   const allContainers = [
   {
     id: '1',
@@ -165,7 +160,7 @@ const Contenitori = () => {
     conditions: ["Nuovo", "Usato"]
   };
 
-  // Filtri funzionanti
+  
   const filteredContainers = allContainers.filter(container => {
     const categoryMatch = filters.category.length === 0 || 
       filters.category.some(cat => {
@@ -187,13 +182,12 @@ const Contenitori = () => {
     );
   });
 
-  // Aggiungi al carrello con feedback
   const handleAddToCart = (item) => {
     addToCart({
       ...item,
-      id: `${item.id}-${Date.now()}`, // ID univoco
+      id: `${item.id}-${Date.now()}`, 
       quantity: 1,
-      priceNumber: parseFloat(item.price.replace('€', '').replace(',', ''))
+      priceNumber: parseFloat(item.price.replace('€', '').replace(/\./g, '').replace(',', '.'))
     });
     
     setAlertMessage(`${item.title} aggiunto al carrello`);
@@ -201,7 +195,7 @@ const Contenitori = () => {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
-  // Paginazione
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   const totalPages = Math.ceil(filteredContainers.length / itemsPerPage);
@@ -212,7 +206,7 @@ const Contenitori = () => {
 
   return (
     <Container className="py-5">
-      {/* Alert per aggiunta al carrello */}
+
       {showAlert && (
         <Alert 
           variant="success" 
@@ -224,12 +218,12 @@ const Contenitori = () => {
         </Alert>
       )}
 
-      {/* Badge carrello */}
+      
       <Button 
         variant="primary" 
         onClick={() => setShowCart(true)}
-        className="position-fixed end-0 top-0 m-3 z-3"
-        style={{ zIndex: 1000 }}
+        className="position-fixed end-0 m-3" 
+        style={{ zIndex: 1040, top: 'calc(var(--navbar-height-lg) + 15px)' }} 
       >
         <FaShoppingCart />
         {cart.length > 0 && (
@@ -239,7 +233,7 @@ const Contenitori = () => {
         )}
       </Button>
 
-      {/* Offcanvas carrello */}
+
       <Offcanvas show={showCart} onHide={() => setShowCart(false)} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
@@ -294,7 +288,7 @@ const Contenitori = () => {
                   variant="success" 
                   className="w-100 mb-2"
                   as={Link}
-                  to="/checkout"
+                  to="/procedi-ordine"
                 >
                   Procedi all'ordine
                 </Button>
@@ -311,7 +305,6 @@ const Contenitori = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
-      {/* Intestazione e breadcrumb */}
       <div className="mb-4">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
@@ -328,14 +321,14 @@ const Contenitori = () => {
       </div>
 
       <Row>
-        {/* Filtri */}
+
         <Col lg={3} className="mb-4">
           <Card className="shadow-sm sticky-top" style={{ top: '80px' }}>
             <Card.Header className="bg-primary text-white">
               <h5 className="mb-0"><FaSearch className="me-2" />Filtra Prodotti</h5>
             </Card.Header>
             <Card.Body>
-              {/* Filtri categorie */}
+
               <Form.Group className="mb-3">
                 <Form.Label><FaBoxOpen className="me-2" />Categorie</Form.Label>
                 <ListGroup>
@@ -357,8 +350,8 @@ const Contenitori = () => {
                   ))}
                 </ListGroup>
               </Form.Group>
-
-             <Form.Group className="mb-3">
+              
+              <Form.Group className="mb-3">
                 <Form.Label><FaRuler className="me-2" />Dimensioni</Form.Label>
                 <ListGroup>
                   {filterOptions.sizes.map((sz, i) => (
@@ -401,7 +394,7 @@ const Contenitori = () => {
                   ))}
                 </ListGroup>
               </Form.Group>
-
+              
               <Form.Group className="mb-3">
                 <Form.Label><FaPlug className="me-2" />Condizione</Form.Label>
                 <ListGroup>
@@ -423,7 +416,6 @@ const Contenitori = () => {
                   ))}
                 </ListGroup>
               </Form.Group>
-            {/* fine filtri aggiunti */}
               
               <Button 
                 variant="outline-primary" 
@@ -438,13 +430,12 @@ const Contenitori = () => {
                   setCurrentPage(1);
                 }}
               >
-                Resetta tutti i filtri
+                Mostra tutti i prodotti
               </Button>
             </Card.Body>
           </Card>
         </Col>
 
-        {/* Lista prodotti */}
         <Col lg={9}>
           {filteredContainers.length === 0 ? (
             <div className="text-center py-5">
@@ -515,11 +506,11 @@ const Contenitori = () => {
                       
                       <Card.Footer className="bg-white border-0 d-flex justify-content-between">
                        <Button 
-  variant="outline-primary" 
-  onClick={() => setSelectedProduct(item)}
->
-  Dettagli
-</Button>
+                          variant="outline-primary" 
+                          onClick={() => setSelectedProduct(item)}
+                        >
+                          Dettagli
+                        </Button>
 
                         <Button 
                           variant="primary"
@@ -533,7 +524,6 @@ const Contenitori = () => {
                 ))}
               </Row>
 
-              {/* Paginazione */}
               {totalPages > 1 && (
                 <div className="d-flex justify-content-center mt-5">
                   <nav>
@@ -567,55 +557,54 @@ const Contenitori = () => {
         </Col>
       </Row>
       <Modal
-  show={selectedProduct !== null}
-  onHide={() => setSelectedProduct(null)}
-  size="lg"
-  centered
-  backdrop="static"
-  keyboard={false}
->
-  <Modal.Header closeButton>
-    <Modal.Title>{selectedProduct?.title}</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Row>
-      <Col md={6}>
-        <img 
-          src={selectedProduct?.image} 
-          alt={selectedProduct?.title} 
-          className="img-fluid rounded"
-        />
-      </Col>
-      <Col md={6}>
-        <p><strong>Prezzo:</strong> {selectedProduct?.price}</p>
-        <p><strong>Condizione:</strong> {selectedProduct?.condition}</p>
-        <p><strong>Dimensioni:</strong> {selectedProduct?.size}</p>
-        
-       <p><strong>Anno di produzione:</strong> {selectedProduct?.productionYear}</p>
-      <p><strong>Descrizione:</strong> {selectedProduct?.description}</p>
-      <p><strong>Tempi di consegna:</strong> {selectedProduct?.deliveryTime}</p>
+        show={selectedProduct !== null}
+        onHide={() => setSelectedProduct(null)}
+        size="lg"
+        centered
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedProduct?.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Col md={6}>
+              <img 
+                src={selectedProduct?.image} 
+                alt={selectedProduct?.title} 
+                className="img-fluid rounded"
+              />
+            </Col>
+            <Col md={6}>
+              <p><strong>Prezzo:</strong> {selectedProduct?.price}</p>
+              <p><strong>Condizione:</strong> {selectedProduct?.condition}</p>
+              <p><strong>Dimensioni:</strong> {selectedProduct?.size}</p>
+              
+              <p><strong>Anno di produzione:</strong> {selectedProduct?.productionYear}</p>
+              <p><strong>Descrizione:</strong> {selectedProduct?.description}</p>
+              <p><strong>Tempi di consegna:</strong> {selectedProduct?.deliveryTime}</p>
 
-      </Col>
-    </Row>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setSelectedProduct(null)}>
-      Chiudi
-    </Button>
-    <Button variant="primary" onClick={() => {
-      handleAddToCart(selectedProduct);
-      setSelectedProduct(null);
-    }}>
-      <FaShoppingCart className="me-2" /> Aggiungi al carrello
-    </Button>
-  </Modal.Footer>
-</Modal>
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setSelectedProduct(null)}>
+            Chiudi
+          </Button>
+          <Button variant="primary" onClick={() => {
+            handleAddToCart(selectedProduct);
+            setSelectedProduct(null);
+          }}>
+            <FaShoppingCart className="me-2" /> Aggiungi al carrello
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </Container>
   );
 };
 
-// Componente helper per paginazione
 const PaginationItem = ({ active, disabled, onClick, label }) => (
   <li className={`page-item ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`}>
     <button className="page-link" onClick={onClick} disabled={disabled}>

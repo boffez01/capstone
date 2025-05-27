@@ -1,12 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'; 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop'; 
 
 const App = () => {
   return (
     <>
-      <Navbar />
-      <main>
+      <ScrollToTop /> 
+      <Navbar /> 
+      <main className="content-offset"> 
         <Outlet /> 
       </main>
       <Footer />

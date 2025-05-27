@@ -4,23 +4,20 @@ const AboutUs = () => {
   return (
     <section className="py-5">
       <Container>
-        <Row className="align-items-center">
-          <Col lg={6} className="mb-4 mb-lg-0">
-            <h2 className="mb-4">Chi Siamo</h2>
+        <Row className="align-items-center d-flex">
+          <Col lg={6} md={12} className="mb-4 mb-lg-0">
+            <h2 className="mb-4">La Nostra Visione</h2>
             <p>
-              Chiarenza supporta i clienti in ogni fase del processo di produzione. Dalla progettazione alla consegna, 
-              a ogni cliente viene assegnato un team di supporto dedicato per gestire senza problemi i programmi 
-              attraverso la produzione.
+              In **NexusTech Solutions**, trasformiamo le sfide industriali in opportunità di successo. Dalla concezione più audace alla realizzazione più complessa, siamo il tuo partner strategico in ogni fase del percorso produttivo. Ogni progetto è un'espressione del nostro impegno, gestito con dedizione da un team esperto e multidisciplinare, garantendo risultati impeccabili e superando le aspettative.
             </p>
             <p>
-              Con un team dedicato, una vasta rete di fornitori e diverse capacità, Chiarenza ha l'esperienza di 
-              produzione pronta per supportarti con il tuo prossimo progetto.
+              Con una vasta rete di fornitori certificati e competenze consolidate in diverse aree chiave – dalla precisione della carpenteria metallica all'avanguardia dell'impiantistica industriale – NexusTech Solutions è pronta a supportare la tua prossima grande idea. La nostra esperienza è la tua garanzia di innovazione, efficienza e qualità superiore, progettata per far progredire la tua azienda nel panorama industriale moderno.
             </p>
           </Col>
-          <Col lg={6}>
-            <img 
-              src="/images/about-us.jpg" 
-              alt="Lavorazione metallica" 
+          <Col lg={6} md={12}>
+            <img
+              src="/images/foto_tecnici.jpg" 
+              alt="Ingegneria Industriale"
               className="img-fluid rounded shadow"
             />
           </Col>
