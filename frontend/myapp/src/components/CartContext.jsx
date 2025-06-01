@@ -34,7 +34,7 @@ export const CartProvider = ({ children }) => {
     );
   };
 const cartTotal = cart.reduce((sum, item) => {
-  // Usa direttamente priceNumber se esiste, altrimenti il prezzo originale
+
   const price = item.priceNumber || item.price;
   return sum + (price * item.quantity);
 }, 0);

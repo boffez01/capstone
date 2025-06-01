@@ -8,21 +8,19 @@ const ContainerManagementPage = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   
-  // STATO INIZIALE AGGIORNATO per includere tutti i nuovi campi
   const [currentContainer, setCurrentContainer] = useState({
-    title: '', // Nuovo campo
+    title: '', 
     type: '',
     price: 0,
     description: '',
     imageUrl: '',
-    condition: '',     // Nuovo campo
-    size: '',          // Nuovo campo
-    productionYear: '',// Nuovo campo
-    deliveryTime: '',  // Nuovo campo
-    ready: false       // Nuovo campo
+    condition: '',    
+    size: '',       
+    productionYear: '',
+    deliveryTime: '', 
+    ready: false      
   });
 
-  // Opzioni per i dropdown (devono essere coerenti con il frontend pubblico)
   const typeOptions = ["Standard", "WC e lavabo", "WC, lavabo e doccia", "High Cube"];
   const conditionOptions = ["Nuovo", "Usato"];
   const sizeOptions = ["10 piedi", "20 piedi", "40 piedi", "45 piedi"];
@@ -101,7 +99,7 @@ const ContainerManagementPage = () => {
         <h1>Gestione Container</h1>
         <Button variant="success" onClick={() => {
           setCurrentContainer({
-            title: '', // Resetta tutti i campi
+            title: '', 
             type: '',
             price: 0,
             description: '',
@@ -119,12 +117,12 @@ const ContainerManagementPage = () => {
       <Table striped bordered hover responsive>
         <thead>
           <tr>
-            <th>ID</th> {/* Aggiunto ID per coerenza */}
+            <th>ID</th> 
             <th>Titolo</th>
             <th>Tipo</th>
-            <th>Dim.</th> {/* Abbreviazione per spazio */}
-            <th>Cond.</th> {/* Abbreviazione per spazio */}
-            <th>Pronto</th> {/* Abbreviazione per spazio */}
+            <th>Dim.</th> 
+            <th>Cond.</th> 
+            <th>Pronto</th> 
             <th>Prezzo (€)</th>
             <th>Azioni</th>
           </tr>

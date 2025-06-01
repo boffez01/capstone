@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react'; // Assicurati che 'useEffect' sia importato se lo usi, cosa che fai
+import React, { useState, useEffect } from 'react'; 
 import { Container, Row, Col, Card, Button, Form, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../components/CartContext'; // Assicurati che il path sia corretto per il tuo progetto
+import { useCart } from '../components/CartContext'; 
 
 const ProceedToOrderPage = () => {
   const navigate = useNavigate();
-  const { cart, cartTotal } = useCart(); // Prendi il carrello e il totale dal contesto
+  const { cart, cartTotal } = useCart(); 
 
-  // Costanti per il calcolo dell'IVA
-  const taxRate = 0.22; // IVA al 22%
+  
+  const taxRate = 0.22; 
 
-  // Calcola l'IVA e il totale finale dinamicamente in base al cartTotal
   const taxAmount = cartTotal * taxRate;
   const total = cartTotal + taxAmount;
 
-  // Stai usando useEffect per calcolare il subtotale e il totale,
-  // ma con cartTotal proveniente dal contesto, non è strettamente necessario
-  // ridefinire orderSummary in questo modo. Puoi semplicemente calcolare
-  // taxAmount e total direttamente come fatto sopra.
-  // Ho rimosso il vecchio useState per orderSummary e il suo useEffect,
-  // perché ora usi i dati dal contesto.
 
   const [userDetails, setUserDetails] = useState({
     firstName: '',
@@ -32,17 +25,6 @@ const ProceedToOrderPage = () => {
     notes: ''
   });
 
-  // Questo useEffect non è più necessario per calcolare i totali
-  // dato che cartTotal, taxAmount e total sono calcolati direttamente.
-  // Lo lascio come commento per completezza, ma puoi rimuoverlo se non hai altri usi per orderSummary
-  /*
-  useEffect(() => {
-    // La logica qui dentro ora è gestita direttamente dai calcoli di taxAmount e total
-    // basati su cartTotal che arriva dal contesto.
-    // Se orderSummary avesse altri stati complessi non derivabili direttamente dal carrello,
-    // allora potrebbe avere senso mantenerlo.
-  }, [cart, cartTotal, taxRate]);
-  */
 
   const handleUserInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,14 +34,13 @@ const ProceedToOrderPage = () => {
   const handleConfirmOrder = (e) => {
     e.preventDefault();
 
-    // Qui invii i dati reali del carrello e del cliente al backend (se ne hai uno)
     console.log('Ordine da confermare:', {
       order: {
-        items: cart.map(item => ({ // Mappa gli elementi del carrello per il backend
-          id: item.id, // L'ID del prodotto nel carrello
-          name: item.title, // Assumi che il titolo sia il nome del prodotto
+        items: cart.map(item => ({ 
+          id: item.id, 
+          name: item.title, 
           quantity: item.quantity,
-          price: item.priceNumber // Usa il prezzo numerico che hai già preparato nel CartContext
+          price: item.priceNumber 
         })),
         subtotal: cartTotal,
         taxRate: taxRate,
@@ -70,8 +51,6 @@ const ProceedToOrderPage = () => {
 
     alert('Ordine confermato! Verrai ricontattato a breve per fissare un appuntamento in sede per la firma dei documenti.');
 
-    // Qui potresti anche svuotare il carrello se l'ordine è stato completato con successo
-    // clearCart(); // Se hai una funzione clearCart nel tuo CartContext
 
     navigate('/');
   };
@@ -96,9 +75,9 @@ const ProceedToOrderPage = () => {
                   {cart.map(item => (
                     <ListGroup.Item key={item.id} className="d-flex justify-content-between align-items-center">
                       <div>
-                        {item.title} <span className="text-muted">x {item.quantity}</span> {/* Usa item.title dal tuo oggetto */}
+                        {item.title} <span className="text-muted">x {item.quantity}</span>
                       </div>
-                      <span>€ {(item.priceNumber * item.quantity).toFixed(2)}</span> {/* Usa item.priceNumber */}
+                      <span>€ {(item.priceNumber * item.quantity).toFixed(2)}</span> 
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
@@ -107,15 +86,15 @@ const ProceedToOrderPage = () => {
               <hr />
               <div className="d-flex justify-content-between fw-bold mb-2">
                 <span>Subtotale:</span>
-                <span>€ {cartTotal.toFixed(2)}</span> {/* Usa cartTotal direttamente */}
+                <span>€ {cartTotal.toFixed(2)}</span> 
               </div>
               <div className="d-flex justify-content-between fw-bold mb-2">
-                <span>IVA ({(taxRate * 100).toFixed(0)}%):</span> {/* Calcola la percentuale dinamicamente */}
-                <span>€ {taxAmount.toFixed(2)}</span> {/* Usa taxAmount */}
+                <span>IVA ({(taxRate * 100).toFixed(0)}%):</span> 
+                <span>€ {taxAmount.toFixed(2)}</span> 
               </div>
               <div className="d-flex justify-content-between display-6 fw-bold text-primary">
                 <span>Totale:</span>
-                <span>€ {total.toFixed(2)}</span> {/* Usa total */}
+                <span>€ {total.toFixed(2)}</span> 
               </div>
             </Card.Body>
           </Card>

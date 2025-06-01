@@ -1,4 +1,3 @@
-// router.js
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App';
 import Home from './pages/Home';
@@ -7,23 +6,18 @@ import Servizi from './pages/Servizi';
 import Contenitori from './pages/Contenitori';
 import Contatti from './pages/Contatti';
 import NotFound from './pages/NotFound';
-
-// Pagine di dettaglio dei servizi
 import CarpenteriaSaldatura from './pages/servizi-dettaglio/CarpenteriaSaldatura';
 import LavorazioneLamiera from './pages/servizi-dettaglio/LavorazioneLamiera';
 import ManutenzioneIndustriale from './pages/servizi-dettaglio/ManutenzioneIndustriale';
 import Piping from './pages/servizi-dettaglio/Piping';
 import Impiantistica from './pages/servizi-dettaglio/Impiantistica';
 import Montaggi from './pages/servizi-dettaglio/Montaggi';
-
 import ProceedToOrderPage from './pages/ProceedToOrderPage';
-
-// Pagine dell'area admin (con path aggiornati per la sottocartella 'admin')
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ContactMessagesPage from './pages/admin/ContactMessagesPage';
 import ContainerManagementPage from './pages/admin/ContainerManagementPage';
-import OrderManagementPage from './pages/admin/OrderManagementPage'; // <-- NUOVO IMPORT
+import OrderManagementPage from './pages/admin/OrderManagementPage'; 
 
 const AdminPrivateRoute = ({ children }) => {
     const token = localStorage.getItem('adminAuthToken');
@@ -44,7 +38,6 @@ const router = createBrowserRouter([
 
             { path: 'procedi-ordine', element: <ProceedToOrderPage /> },
 
-            // Rotte dell'area admin
             { path: 'admin/login', element: <AdminLoginPage /> },
             {
                 path: 'admin/dashboard',
@@ -71,15 +64,15 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: 'admin/orders', // <-- NUOVA ROTTA PER LA GESTIONE DEGLI ORDINI
+                path: 'admin/orders', 
                 element: (
                     <AdminPrivateRoute>
-                        <OrderManagementPage /> {/* Punta al nuovo componente */}
+                        <OrderManagementPage /> 
                     </AdminPrivateRoute>
                 ),
             },
 
-            // Rotte dei dettagli servizi
+
             { path: 'servizi/carpenteria-saldatura', element: <CarpenteriaSaldatura /> },
             { path: 'servizi/lavorazione-lamiera', element: <LavorazioneLamiera /> },
             { path: 'servizi/manutenzione-industriale', element: <ManutenzioneIndustriale /> },

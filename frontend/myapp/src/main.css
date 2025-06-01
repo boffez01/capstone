@@ -1,7 +1,5 @@
-/* Importazione dei font - Assicurati che questi URL siano validi o che i font siano inclusi localmente */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
 
-/* --- Variabili CSS (Design Tokens) --- */
 :root {
   --primary: #0d6efd;
   --secondary: #6c757d;
@@ -19,32 +17,31 @@
   --navbar-height-sm: 80px;
 }
 
-/* --- Stili Base per HTML, Body e Root (per layout full height) --- */
-html, body {
-  height: 100%; /* Fa sì che html e body occupino il 100% dell'altezza della viewport */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  overflow-x: hidden;
+  background-color: var(--body-bg);
 }
 
 #root {
-  height: 100%; /* Anche #root deve occupare il 100% dell'altezza */
-  display: flex; /* Trasforma #root in un flex container */
-  flex-direction: column; /* I suoi figli (Navbar, Main, Footer) si allineeranno in colonna */
-  
-  /* Le seguenti proprietà sono state rimosse da #root per permettere al layout di estendersi */
-  /* max-width: 1280px; */
-  /* margin: 0 auto;    */
-  /* padding: 2rem;     */
-
-  font-family: 'Open Sans', sans-serif; /* Imposta il font predefinito */
-  line-height: 1.6;
-  color: var(--text-color);
-  overflow-x: hidden; /* Evita scroll orizzontali indesiderati */
-  background-color: var(--body-bg);
-  text-align: center; /* Questo allinea il testo al centro per il root, ma i contenuti interni possono sovrascrivere */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
 }
 
-/* --- Stili Generali degli Elementi --- */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -61,7 +58,6 @@ a:hover {
   color: var(--dark-blue);
 }
 
-/* --- Stili per Sezioni e Componenti Generici --- */
 .section {
   padding: 5rem 0;
   animation: fadeIn 0.8s ease-out forwards;
@@ -103,8 +99,6 @@ a:hover {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-
-
 
 .btn-primary {
   background-color: var(--primary);
@@ -153,7 +147,6 @@ a:hover {
   color: var(--dark-blue);
 }
 
-/* --- Colori di Sfondo e Testo (Bootstrap Overrides) --- */
 .bg-light {
   background-color: var(--light) !important;
   color: var(--text-color) !important;
@@ -164,7 +157,6 @@ a:hover {
   color: white !important;
 }
 
-/* Stili per Breadcrumbs */
 .breadcrumb-item a {
   color: var(--text-color);
 }
@@ -173,7 +165,6 @@ a:hover {
   color: var(--secondary);
 }
 
-/* Stili per Sfondo Scuro e Testo Chiaro */
 .bg-dark {
   background-color: var(--dark) !important;
   color: var(--text-light) !important;
@@ -190,7 +181,6 @@ a:hover {
   color: var(--text-light) !important;
 }
 
-/* --- Footer Specific Styles --- */
 footer .row {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -220,9 +210,11 @@ footer img[alt='NexusTech Solutions Logo'] {
   color: var(--primary) !important;
 }
 
-/* --- Navbar Specific Styles --- */
 .content-offset {
-  padding-top: var(--navbar-height-lg);
+  flex-grow: 1;
+  padding-top: calc(var(--navbar-height-lg) + 30px);
+  display: flex;
+  flex-direction: column;
 }
 
 .chiarenza-navbar {
@@ -306,7 +298,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   color: var(--primary);
 }
 
-/* --- Hero Section Styles --- */
 .hero {
   min-height: 85vh;
   display: flex;
@@ -354,7 +345,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   justify-content: flex-start !important;
 }
 
-/* --- Utility Classes --- */
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -375,7 +365,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   top: 1rem;
 }
 
-/* --- Pagination Styles --- */
 .pagination .page-item .page-link {
   color: var(--primary);
   border-color: #dee2e2;
@@ -391,13 +380,11 @@ footer img[alt='NexusTech Solutions Logo'] {
   color: var(--secondary);
 }
 
-/* --- Shopping Cart Button (fixed position) --- */
 .position-fixed.end-0.m-3 {
   z-index: 1040;
   top: calc(var(--navbar-height-lg) + 15px);
 }
 
-/* --- Animations --- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -409,7 +396,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   }
 }
 
-/* --- About Us Section Styles --- */
 .about-us-row {
   display: flex;
   align-items: center;
@@ -422,7 +408,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   margin-right: 1.5rem;
 }
 
-/* --- Containers Animation Section Styles --- */
 .containers-animation-wrapper {
   overflow: hidden;
   width: 100%;
@@ -474,7 +459,6 @@ footer img[alt='NexusTech Solutions Logo'] {
   }
 }
 
-/* --- Services Section Styles --- */
 .services-section {
   background-color: #ffffff;
   padding: 80px 20px;
@@ -664,7 +648,7 @@ footer img[alt='NexusTech Solutions Logo'] {
 
 
 
-/* --- Media Queries per Responsive Design --- */
+/* Media Queries per Responsive Design */
 
 /* Tablet (992px) */
 @media (max-width: 992px) {

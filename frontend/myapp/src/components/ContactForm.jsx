@@ -9,12 +9,12 @@ const Contatti = () => {
   const [oggetto, setOggetto] = useState('');
   const [messaggio, setMessaggio] = useState('');
   const [privacyAccettata, setPrivacyAccettata] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState(''); // Stato per i messaggi di feedback
-  const [messageVariant, setMessageVariant] = useState('success'); // Stato per il tipo di alert
+  const [feedbackMessage, setFeedbackMessage] = useState(''); 
+  const [messageVariant, setMessageVariant] = useState('success'); 
 
-  const handleSubmit = async (e) => { // Importante: deve essere async
+  const handleSubmit = async (e) => { 
     e.preventDefault();
-    setFeedbackMessage(''); // Resetta il messaggio di feedback ad ogni invio
+    setFeedbackMessage(''); 
 
     if (!privacyAccettata) {
       setFeedbackMessage("Devi accettare la politica sulla privacy per inviare il messaggio.");
@@ -23,7 +23,7 @@ const Contatti = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/contact', { // <-- URL del tuo backend
+      const response = await fetch('http://localhost:8080/api/contact', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +33,6 @@ const Contatti = () => {
           email: email,
           subject: oggetto,
           message: messaggio,
-          // privacyAccettata non la invii al backend, ma la gestisci lato frontend
         })
       });
 
@@ -48,7 +47,7 @@ const Contatti = () => {
       setEmail('');
       setOggetto('');
       setMessaggio('');
-      setPrivacyAccettata(false); // Resetta la checkbox
+      setPrivacyAccettata(false);
     } catch (err) {
       setFeedbackMessage('Errore durante l\'invio del messaggio: ' + err.message);
       setMessageVariant('danger');

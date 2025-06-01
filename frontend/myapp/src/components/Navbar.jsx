@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from 'react-router-dom'; // Importa useLocation e useNavigate
-import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa'; // Importa FaSignOutAlt
+import { Link, useLocation, useNavigate } from 'react-router-dom'; 
+import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 
 const NavbarComponent = () => {
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation(); // Inizializza useLocation
-  const navigate = useNavigate(); // Inizializza useNavigate
+  const location = useLocation(); 
+  const navigate = useNavigate(); 
 
-  // Stato per monitorare se l'utente è autenticato come admin
-  // Legge il localStorage al mount e ogni volta che la location cambia (per essere reattivo)
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(!!localStorage.getItem('adminAuthToken'));
 
-  // Aggiorna lo stato di autenticazione quando la location cambia
   useEffect(() => {
     setIsAdminAuthenticated(!!localStorage.getItem('adminAuthToken'));
-  }, [location.pathname]); // Dipende dal cambio di path per ri-controllare il token
+  }, [location.pathname]); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,13 +26,11 @@ const NavbarComponent = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('adminAuthToken'); // Rimuove il token
-    setIsAdminAuthenticated(false); // Aggiorna lo stato per far cambiare il link nella navbar
-    navigate('/admin/login'); // Reindirizza alla pagina di login
+    localStorage.removeItem('adminAuthToken');
+    setIsAdminAuthenticated(false); 
+    navigate('/admin/login');
   };
 
-  // Determina se il link "Accedi/Disconnettiti" deve essere visibile o disattivato
-  // Mostra "Disconnettiti" SOLO se l'utente è autenticato E non è sulla pagina di login
   const shouldShowLogout = isAdminAuthenticated && location.pathname !== '/admin/login';
 
   return (

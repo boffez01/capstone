@@ -244,7 +244,7 @@ const Contenitori = () => {
   let priceNumber;
   
   if (typeof item.price === 'string') {
-    // Se il prezzo è una stringa con simbolo € (es. "€1.200,00")
+
     priceNumber = parseFloat(
       item.price
         .replace('€', '')
@@ -252,15 +252,15 @@ const Contenitori = () => {
         .replace(',', '.')
     );
   } else {
-    // Se il prezzo è già un numero (es. 1200.00)
+
     priceNumber = item.price;
   }
 
   addToCart({
     ...item,
-    id: `${item.id}-${Date.now()}`, // ID unico
+    id: `${item.id}-${Date.now()}`, 
     quantity: 1,
-    priceNumber: priceNumber // Usa il numero convertito
+    priceNumber: priceNumber
   });
 
   setAlertMessage(`${item.title} aggiunto al carrello`);
@@ -293,7 +293,6 @@ const Contenitori = () => {
         </Alert>
       )}
 
-      {/* Mostra l'avviso se il backend non è raggiungibile */}
       {error && (
         <Alert variant="warning" className="mb-4">
           <strong>Avviso:</strong> {error}

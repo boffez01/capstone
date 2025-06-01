@@ -1,4 +1,4 @@
-// src/pages/OrderManagementPage.js
+
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Alert, Modal, Form, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -7,12 +7,11 @@ const OrderManagementPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Stato per l'ordine selezionato (per modifica stato o visualizzazione dettagli)
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [showOrderModal, setShowOrderModal] = useState(false); // Modale per gli ordini
 
-  const orderStatusOptions = ["Pending", "Confirmed", "Completed", "Cancelled"]; // Opzioni per lo stato dell'ordine
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showOrderModal, setShowOrderModal] = useState(false); 
+
+  const orderStatusOptions = ["Pending", "Confirmed", "Completed", "Cancelled"]; 
 
   useEffect(() => {
     fetchOrders();
@@ -34,7 +33,7 @@ const OrderManagementPage = () => {
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false); // Imposta loading a false anche qui
+      setLoading(false);
     }
   };
 
@@ -56,9 +55,9 @@ const OrderManagementPage = () => {
           throw new Error(errorData.message || 'Aggiornamento stato ordine fallito');
       }
 
-      fetchOrders(); // Ricarica la lista degli ordini per vedere l'aggiornamento
-      setShowOrderModal(false); // Chiudi la modale
-      setSelectedOrder(null); // Resetta l'ordine selezionato
+      fetchOrders(); 
+      setShowOrderModal(false);
+      setSelectedOrder(null); 
     } catch (err) {
       setError(err.message);
     }
@@ -77,7 +76,7 @@ const OrderManagementPage = () => {
 
       if (!response.ok) throw new Error('Cancellazione ordine fallita');
 
-      setOrders(orders.filter(order => order.id !== id)); // Aggiorna lo stato localmente
+      setOrders(orders.filter(order => order.id !== id)); 
     } catch (err) {
       setError(err.message);
     }
@@ -88,7 +87,7 @@ const OrderManagementPage = () => {
 
   return (
     <Container className="py-5">
-      <h1 className="mb-4">Gestione Ordini</h1> {/* Titolo per la pagina */}
+      <h1 className="mb-4">Gestione Ordini</h1> 
 
       <Table striped bordered hover responsive>
         <thead>
@@ -127,8 +126,8 @@ const OrderManagementPage = () => {
                   size="sm"
                   className="me-2"
                   onClick={() => {
-                    setSelectedOrder(order); // Imposta l'ordine da visualizzare/modificare
-                    setShowOrderModal(true); // Apri la modale degli ordini
+                    setSelectedOrder(order); 
+                    setShowOrderModal(true); 
                   }}
                 >Dettagli/Stato</Button>
                 <Button
@@ -142,13 +141,12 @@ const OrderManagementPage = () => {
         </tbody>
       </Table>
 
-      {/* Modale per Dettagli/Modifica Stato Ordine */}
       <Modal show={showOrderModal} onHide={() => setShowOrderModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Dettagli Ordine #{selectedOrder?.id}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedOrder && ( // Mostra i dettagli solo se un ordine è selezionato
+          {selectedOrder && ( 
             <>
               <p><strong>Data Ordine:</strong> {new Date(selectedOrder.orderDate).toLocaleString()}</p>
               <p><strong>Totale:</strong> € {selectedOrder.totalPrice?.toFixed(2)}</p>
@@ -170,7 +168,6 @@ const OrderManagementPage = () => {
                 {selectedOrder.items && selectedOrder.items.length > 0 ? (
                   selectedOrder.items.map(item => (
                     <ListGroup.Item key={item.id}>
-                      {/* Dettagli dell'elemento: titolo container e quantità */}
                       {item.container ? item.container.title : 'Prodotto Sconosciuto'} (ID: {item.container?.id || 'N/A'}) x {item.quantity} - € {item.unitPrice?.toFixed(2)} cad.
                     </ListGroup.Item>
                   ))

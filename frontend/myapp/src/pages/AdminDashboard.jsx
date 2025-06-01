@@ -1,4 +1,4 @@
-// src/pages/AdminDashboard.js
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Alert, Table } from 'react-bootstrap';
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
                         const errorData = await response.json();
                         errorMessage = errorData.message || errorData.error || errorMessage;
                     } catch (e) {
-                        // Se il parsing JSON fallisce, usa il messaggio di errore di default
+
                     }
 
                     if (response.status === 401 || response.status === 403) {
@@ -114,7 +114,6 @@ const AdminDashboard = () => {
                 </Col>
             </Row>
 
-            {/* Schede Statistiche Generali */}
             <Row className="g-4 mb-5">
                 <Col md={6} lg={4}>
                     <Card style={cardStyle} className="shadow-sm">
@@ -148,7 +147,6 @@ const AdminDashboard = () => {
                 </Col>
             </Row>
 
-            {/* Link alle Sezioni di Gestione */}
             <Row className="g-4 mt-4">
                 <Col md={6} lg={4} className="mb-4">
                     <Card className="shadow-sm h-100">
@@ -170,13 +168,13 @@ const AdminDashboard = () => {
                                 <Card.Title>Gestione Container</Card.Title>
                                 <Card.Text>Aggiungi, modifica o elimina container dal catalogo.</Card.Text>
                             </div>
-                            <Button as={Link} to="/admin/containers" variant="info" className="mt-3"> {/* Nota: ho usato 'info' per il colore */}
+                            <Button as={Link} to="/admin/containers" variant="info" className="mt-3"> 
                                 Vai alla Gestione
                             </Button>
                         </Card.Body>
                     </Card>
                 </Col>
-                {/* --- NUOVA CARD PER LA GESTIONE DEGLI ORDINI --- */}
+
                 <Col md={6} lg={4} className="mb-4">
                     <Card className="shadow-sm h-100">
                         <Card.Body className="d-flex flex-column justify-content-between">
@@ -184,13 +182,13 @@ const AdminDashboard = () => {
                                 <Card.Title>Gestione Ordini</Card.Title>
                                 <Card.Text>Visualizza e aggiorna lo stato degli ordini dei clienti.</Card.Text>
                             </div>
-                            <Button as={Link} to="/admin/orders" variant="warning" className="mt-3"> {/* Ho usato 'warning' per colore */}
+                            <Button as={Link} to="/admin/orders" variant="warning" className="mt-3">
                                 Vai agli Ordini
                             </Button>
                         </Card.Body>
                     </Card>
                 </Col>
-                {/* --- FINE NUOVA CARD --- */}
+
                 <Col md={6} lg={4} className="mb-4">
                     <Card className="shadow-sm h-100">
                         <Card.Body className="d-flex flex-column justify-content-between">
@@ -205,8 +203,6 @@ const AdminDashboard = () => {
                     </Card>
                 </Col>
             </Row>
-
-            {/* Tabella Dettagli Dashboard (Opzionale) - come era prima */}
             {dashboardData && (
                 <Row className="mt-5">
                     <Col>
