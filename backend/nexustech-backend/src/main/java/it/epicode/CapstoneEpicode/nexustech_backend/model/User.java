@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
-@Table(name = "users") // Nome della tabella nel database
-@Data // Genera automaticamente getter, setter, toString, equals e hashCode (da Lombok)
-@NoArgsConstructor // Genera un costruttore senza argomenti (da Lombok)
-@AllArgsConstructor // Genera un costruttore con tutti gli argomenti (da Lombok)
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -31,10 +31,10 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private String password; // Questa sarà la password hashata!
+    private String password;
 
-    // Set di ruoli per l'utente (es. ADMIN, USER)
-    @ElementCollection(fetch = FetchType.EAGER) // Carica i ruoli insieme all'utente
-    @Enumerated(EnumType.STRING) // Salva i ruoli come stringhe nel DB (es. "ROLE_ADMIN")
-    private Set<Role> roles; // Definiamo l'enum Role tra poco
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 }

@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException; // Importa questa classe!
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.http.HttpStatus; // Importa HttpStatus per l'eccezione
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 
@@ -38,34 +38,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = null;
         String username = null;
 
-        // Log iniziali per debug
         System.out.println("DEBUG JWT Filter: Request URI: " + request.getRequestURI());
         System.out.println("DEBUG JWT Filter: Authorization Header RAW: '" + authHeader + "'");
         System.out.println("DEBUG JWT Filter: Authorization Header Length: " + (authHeader != null ? authHeader.length() : 0));
 
-        // 1. Estrai il token JWT dall'header Authorization
-        // Controlla se l'header è presente e inizia con "Bearer " (case-insensitive)
         if (authHeader != null && authHeader.toLowerCase().startsWith("bearer ")) {
-            jwt = authHeader.substring(7).trim(); // Estrai il token e rimuovi spazi extra
+            jwt = authHeader.substring(7).trim();
             System.out.println("DEBUG JWT Filter: Extracted JWT: '" + jwt + "'");
         } else {
             System.out.println("DEBUG JWT Filter: No JWT token found or invalid format (missing 'Bearer ' prefix). Proceeding filter chain.");
-            filterChain.doFilter(request, response); // Prosegui la catena se non c'è un token valido
-            return; // Esci dal filtro
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        // 2. Se il token è stato estratto, tenta di autenticare l'utente
+
         if (jwt != null && !jwt.isEmpty()) {
             try {
                 username = jwtUtils.extractUsername(jwt);
                 System.out.println("DEBUG JWT Filter: Authenticating user: " + username);
 
-                // Se l'username è presente e l'utente non è già autenticato nel contesto di sicurezza
+
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     System.out.println("DEBUG JWT Filter: User roles: " + userDetails.getAuthorities());
 
-                    // Valida il token
+
                     if (jwtUtils.isTokenValid(jwt, userDetails)) {
                         UsernamePasswordAuthenticationToken authentication =
                                 new UsernamePasswordAuthenticationToken(
@@ -78,7 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         System.out.println("DEBUG JWT Filter: Authentication set successfully for user: " + username);
                     } else {
                         System.err.println("DEBUG JWT Filter: JWT token is invalid for user: " + username + ". Throwing Unauthorized.");
-                        // Se il token non è valido (es. firma errata), lancia Unauthorized
+
                         throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Invalid JWT Token");
                     }
                 } else {
@@ -86,21 +83,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             } catch (HttpClientErrorException e) {
-                // Cattura specificamente HttpClientErrorException per rilanciarla
+
                 System.err.println("DEBUG JWT Filter: HttpClientErrorException during authentication: " + e.getMessage());
-                response.sendError(e.getStatusCode().value(), e.getMessage()); // Invia l'errore HTTP appropriato
-                return; // Esci dal filtro
+                response.sendError(e.getStatusCode().value(), e.getMessage());
+                return;
             } catch (Exception e) {
-                // Cattura altre eccezioni (es. UsernameNotFoundException da userDetailsService)
+
                 System.err.println("DEBUG JWT Filter: Generic error during authentication: " + e.getMessage());
-                // Lancia Unauthorized per qualsiasi altro errore di autenticazione
+
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Authentication failed: " + e.getMessage());
-                return; // Esci dal filtro
+                return;
             }
         } else {
             System.out.println("DEBUG JWT Filter: JWT is null or empty after extraction. Proceeding filter chain.");
         }
 
-        filterChain.doFilter(request, response); // Prosegui la catena di filtri
+        filterChain.doFilter(request, response);
     }
 }

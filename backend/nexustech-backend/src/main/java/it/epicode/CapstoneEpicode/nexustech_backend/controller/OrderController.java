@@ -58,7 +58,7 @@ public class OrderController {
                         if (foundContainer.isEmpty()) {
                             throw new RuntimeException("Container non trovato con ID: " + item.getContainer().getId());
                         }
-                        item.setContainer(foundContainer.get()); // AGGIUNTA QUESTA RIGA PER POPOLARE IL CONTAINER
+                        item.setContainer(foundContainer.get());
                         item.setUnitPrice(foundContainer.get().getPrice());
                     } else {
                         if (item.getUnitPrice() == null) {

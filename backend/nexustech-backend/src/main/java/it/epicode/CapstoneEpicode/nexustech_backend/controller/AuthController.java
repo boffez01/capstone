@@ -41,7 +41,7 @@ public class AuthController {
             String token = jwtUtils.generateToken(userDetails);
             return ResponseEntity.ok(new LoginResponse(token));
         } else {
-            return ResponseEntity.status(401).build(); // Unauthorized
+            return ResponseEntity.status(401).build();
         }
     }
 }

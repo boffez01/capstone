@@ -7,37 +7,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*; // Importa tutti i metodi (GetMapping, PostMapping, DeleteMapping, RequestMapping)
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional; // Importa Optional per la gestione del delete
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/admin") // Tutte le API in questo controller inizieranno con /api/admin
-@CrossOrigin(origins = "http://localhost:5173") // Abilita CORS per il tuo frontend React
+@RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminController {
 
-    // Iniezione delle dipendenze necessarie
     @Autowired
-    private ContactMessageRepository contactMessageRepository; // Per accedere ai messaggi di contatto
+    private ContactMessageRepository contactMessageRepository;
 
-    // Endpoint per ottenere i dati della dashboard amministrativa
-    // GET http://localhost:8080/api/admin/dashboard
+
     @GetMapping("/dashboard")
-    @PreAuthorize("hasRole('ADMIN')") // Protegge questo metodo: solo gli utenti con il ruolo 'ADMIN' possono accedervi
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> getAdminDashboardData() {
-        // Recupera l'oggetto Authentication dal contesto di sicurezza di Spring.
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // Estrae lo username dell'utente autenticato
 
-        // In un'applicazione reale, qui recupereresti dati reali dal database.
-        // Ad esempio, potresti contare i messaggi non letti o gli ordini in sospeso.
-        // Per ora, restituiamo dei dati fittizi per testare la funzionalità.
-        long totalUsers = 150; // Dati fittizi
-        long pendingOrders = 5; // Dati fittizi
-        long newMessages = contactMessageRepository.count(); // Esempio: conta tutti i messaggi
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        long totalUsers = 150;
+        long pendingOrders = 5;
+        long newMessages = contactMessageRepository.count();
 
         Map<String, Object> dashboardData = new HashMap<>();
         dashboardData.put("username", username);

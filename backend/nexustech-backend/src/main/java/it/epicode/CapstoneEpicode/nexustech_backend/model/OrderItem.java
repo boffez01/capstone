@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonBackReference; // Per evitare loop JSON
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "order_items") // Nome della tabella nel database
+@Table(name = "order_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,20 +24,18 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Collego l'OrderItem a un Container specifico
     @ManyToOne
-    @JoinColumn(name = "container_id", nullable = false) // Colonna che fa da chiave esterna verso la tabella containers
-    private Container container; // Il tipo di container ordinato
+    @JoinColumn(name = "container_id", nullable = false)
+    private Container container;
 
     @Column(nullable = false)
-    private Integer quantity; // Quantità di quel container
+    private Integer quantity;
 
     @Column(nullable = false)
-    private Double unitPrice; // Prezzo unitario del container al momento dell'ordine
+    private Double unitPrice;
 
-    // Relazione Molti a Uno: Molti OrderItem appartengono a un singolo Order
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false) // Colonna che fa da chiave esterna verso la tabella orders
-    @JsonBackReference // Evita loop infiniti quando serializzi OrderItem
-    private Order order; // L'oggetto Order a cui questo elemento appartiene
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference
+    private Order order;
 }

@@ -16,16 +16,16 @@ public class ContactController {
     @Autowired
     private ContactMessageRepository contactMessageRepository;
 
-    @Autowired // <<< INIETTA IL SERVIZIO EMAIL
+    @Autowired
     private EmailService emailService;
 
     @PostMapping
     public ResponseEntity<String> submitContactForm(@RequestBody ContactMessage message) {
         try {
-            // Salva il messaggio nel database
+
             contactMessageRepository.save(message);
 
-            // CHIAMA IL SERVIZIO PER INVIARE L'EMAIL
+
             emailService.sendContactEmail(message.getName(), message.getEmail(), message.getSubject(), message.getMessage());
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Messaggio ricevuto e email inviata con successo!");
@@ -35,16 +35,5 @@ public class ContactController {
         }
     }
 
-    // Puoi aggiungere qui l'endpoint per admin per vedere tutti i messaggi di contatto
-    // GET http://localhost:8080/api/admin/contact-messages
-    /*
-    import java.util.List;
-    import org.springframework.security.access.prepost.PreAuthorize; // Assicurati l'import se lo usi
 
-    @GetMapping("/admin/contact-messages")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<ContactMessage> getAllContactMessages() {
-        return contactMessageRepository.findAll();
-    }
-    */
 }

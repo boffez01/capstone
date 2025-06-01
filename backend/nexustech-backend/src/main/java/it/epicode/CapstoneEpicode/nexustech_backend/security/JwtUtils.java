@@ -1,18 +1,16 @@
-// it.epicode.CapstoneEpicode.nexustech_backend.security.JwtUtils.java
-
 package it.epicode.CapstoneEpicode.nexustech_backend.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders; // Questo import non è più usato direttamente per la decodifica della chiave
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Base64; // <-- ASSICURATI DI AVERE QUESTO IMPORT!
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +20,7 @@ import java.util.function.Function;
 public class JwtUtils {
 
  @Value("${jwt.secret}")
- private String secret; // Questa è la tua chiave dal application.properties
+ private String secret;
 
 @Value("${jwt.expiration}")
  private long jwtExpirationMs;

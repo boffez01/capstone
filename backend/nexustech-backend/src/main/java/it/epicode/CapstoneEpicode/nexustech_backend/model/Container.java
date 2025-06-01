@@ -22,32 +22,32 @@ public class Container {
     private Long id;
 
     @Column(nullable = false)
-    private String title; // <-- AGGIUNTO: Titolo completo del container (es. "Container 20 piedi usato")
+    private String title;
 
     @Column(nullable = false)
-    private String type; // Campo esistente, usato per la tipologia (es. "Standard", "High Cube", "WC e lavabo")
+    private String type;
 
     @Column(nullable = false)
     private Double price;
 
-    @Column(length = 500) // Ho aggiunto un limite di lunghezza per la descrizione, puoi cambiarlo
+    @Column(length = 500)
     private String description;
 
     @Column
     private String imageUrl;
 
-    @Column // <-- AGGIUNTO: Condizione (es. "Nuovo", "Usato")
+    @Column
     private String condition;
 
-    @Column // <-- AGGIUNTO: Dimensione (es. "10 piedi", "20 piedi", "40 piedi", "45 piedi")
+    @Column
     private String size;
 
-    @Column // <-- AGGIUNTO: Anno di produzione
+    @Column
     private String productionYear;
 
-    @Column // <-- AGGIUNTO: Tempi di consegna
+    @Column
     private String deliveryTime;
 
-    @Column(nullable = false) // <-- AGGIUNTO: Indica se è in pronta consegna
-    private Boolean ready; // Usare Boolean per default null, o impostare default false nel @PrePersist se vuoi
+    @Column(nullable = false)
+    private Boolean ready;
 }

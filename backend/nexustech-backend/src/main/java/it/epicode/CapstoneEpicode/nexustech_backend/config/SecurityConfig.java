@@ -79,10 +79,6 @@ public class SecurityConfig {
                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied");
                   })
           )
-          // *** LA MODIFICA CHIAVE: Disabilita ESPLICITAMENTE l'autenticazione anonima ***
-          //.anonymous(anonymous -> anonymous.disable()) // <-- QUESTA RIGA DEVE ESSERE QUI E FUNZIONARE ALL'AVVIO
-          // Posiziona il filtro JWT al posto del filtro di autenticazione username/password standard.
-          // Con anonymous disabilitato, questo dovrebbe funzionare senza problemi di sovrascrittura.
           .addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
   return http.build();
