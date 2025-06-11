@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Nav, Navbar, Button, NavDropdown } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from 'react-router-dom'; 
-import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FaUserAlt, FaSignOutAlt, FaTachometerAlt } from 'react-icons/fa';
 
 const NavbarComponent = () => {
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(!!localStorage.getItem('adminAuthToken'));
 
   useEffect(() => {
+    const handleStorageChange = () => {
+        setIsAdminAuthenticated(!!localStorage.getItem('adminAuthToken'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
     setIsAdminAuthenticated(!!localStorage.getItem('adminAuthToken'));
-  }, [location.pathname]); 
+
+    return () => {
+        window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,11 +36,11 @@ const NavbarComponent = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('adminAuthToken');
-    setIsAdminAuthenticated(false); 
+    setIsAdminAuthenticated(false);
     navigate('/admin/login');
   };
 
-  const shouldShowLogout = isAdminAuthenticated && location.pathname !== '/admin/login';
+  const shouldShowAdminArea = location.pathname !== '/admin/login';
 
   return (
     <Navbar expand="lg" className={`chiarenza-navbar fixed-top ${scrolled ? 'scrolled' : ''}`}>
@@ -48,11 +57,11 @@ const NavbarComponent = () => {
         <Navbar.Toggle aria-controls="main-navbar" />
 
         <Navbar.Collapse id="main-navbar">
-          <Nav className="ms-auto me-0">
+          <Nav className="ms-auto me-0 align-items-center">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/chi-siamo">Chi Siamo</Nav.Link>
 
-            <NavDropdown title="Servizi" id="basic-nav-dropdown" menuVariant="dark">
+            <NavDropdown title="Servizi" id="servizi-nav-dropdown" menuVariant="dark">
               <NavDropdown.Item as={Link} to="/servizi/carpenteria-saldatura">Carpenteria e Saldatura</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/servizi/lavorazione-lamiera">Lavorazione Lamiera</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/servizi/manutenzione-industriale">Manutenzione Industriale</NavDropdown.Item>
@@ -65,16 +74,32 @@ const NavbarComponent = () => {
 
             <Nav.Link as={Link} to="/contenitori">Contenitori</Nav.Link>
             <Nav.Link as={Link} to="/contatti">Contatti</Nav.Link>
-            
 
-            {shouldShowLogout ? ( 
-              <Nav.Link onClick={handleLogout} style={{ cursor: 'pointer' }} className="ms-lg-3">
-                <FaSignOutAlt style={{ marginRight: '5px' }} /> Disconnettiti
-              </Nav.Link>
-            ) : ( 
-              <Nav.Link as={Link} to="/admin/login" className="ms-lg-3">
-                <FaUserAlt style={{ marginRight: '5px' }} /> Accedi
-              </Nav.Link>
+            {shouldShowAdminArea && (
+              isAdminAuthenticated ? (
+                <NavDropdown
+                  title={<FaUserAlt title="Area Amministratore" />}
+                  id="admin-nav-dropdown"
+                  align="end"
+                  className="ms-lg-3"
+                  menuVariant="dark"
+                >
+                  <NavDropdown.Item as={Link} to="/admin/dashboard">
+                    <FaTachometerAlt className="me-2" />
+                    Pannello Admin
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={handleLogout}>
+                    <FaSignOutAlt className="me-2" />
+                    Disconnettiti
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link as={Link} to="/admin/login" className="ms-lg-3">
+                  <FaUserAlt className="me-2" />
+                  Accedi
+                </Nav.Link>
+              )
             )}
           </Nav>
         </Navbar.Collapse>
